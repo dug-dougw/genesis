@@ -21,10 +21,7 @@ git:
 
 ########################################################################### 
 
-BINS := '~/.local/bin'
-
 VCSHDIR := '~/.config/vcsh'
-REPO := 'git@github.com:dug-dougw/configs.git'
 vcshprep:
   # make dirs for vcsh
   @mkdir -p {{VCSHDIR}}/repo.d
@@ -34,14 +31,14 @@ vcshprep:
   if [ "$(ls -A {{VCSHDIR}}/hooks-enabled)" ]; then \
     cd {{VCSHDIR}}/hooks-enabled; git fetch; \
   else \
-    git clone -b vcsh --single-branch {{REPO}} {{VCSHDIR}}/hooks-enabled; \
+    git clone -b vcsh --single-branch $CONFIGSREPO {{VCSHDIR}}/hooks-enabled; \
   fi
 
 VCSH_URL := 'https://github.com/RichiH/vcsh/releases/latest/download/vcsh-standalone.sh'
 vcsh: vcshprep
   # Install vcsh
-  @mkdir -p {{BINS}}
-  @curl -fsLS {{VCSH_URL}} -o  {{BINS}}/vcsh
+  @mkdir -p $HOMEBINSDIR
+  @curl -fsLS {{VCSH_URL}} -o  $HOMEBINSDIR/vcsh
   @chmod u+x ~/.local/bin/vcsh
 
 dotfiles: vcsh
@@ -69,8 +66,8 @@ direnv:
   #Install direnv
   #!/usr/bin/env bash
   set -euxo pipefail
-  bin_path={{BINS}} bash <(/usr/bin/curl -sfL https://direnv.net/install.sh)
-  chmod +x {{BINS}}/direnv
+  bin_path=$HOMEBINSDIR bash <(/usr/bin/curl -sfL https://direnv.net/install.sh)
+  chmod +x $HOMEBINSDIR/direnv
 ########################################################################### 
 
 rust:
