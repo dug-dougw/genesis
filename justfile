@@ -2,7 +2,7 @@
 set dotenv-load
 
 
-install: git vcsh rust_packages
+install: git vcsh direnv rust_packages
 
 
 ########################################################################### 
@@ -43,6 +43,25 @@ vcsh: vcshprep
   @mkdir -p {{BINS}}
   @curl -fsLS {{VCSH_URL}} -o  {{BINS}}/vcsh
   @chmod u+x ~/.local/bin/vcsh
+
+dotfiles: vcsh
+  # deploy config files for various tools
+  for i in $DOTFILES; do vcsh clone -b $i $CONFIGSREPO $i; done
+
+pluginmanagers:
+  # Install plugin managers for tmux and vim
+  if [ ! -d ~/.vim/bundle/Vundle.vim ]; then \
+    git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim \
+  fi
+  if [ ! -d ~/.tmux/plugins/tpm ]; then \
+    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+  fi
+
+plugins: pluginmanagers
+  # Install vim plugins
+  vim +PluginInstall +qall
+  # Install tmux plugins
+  ~/.tmux/plugins/tpm//bin/install_plugins
 
 ########################################################################### 
 
