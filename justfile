@@ -34,12 +34,16 @@ vcshprep:
     git clone -b vcsh --single-branch $CONFIGSREPO {{VCSHDIR}}/hooks-enabled; \
   fi
 
+# Note that ENV vars don't propagate (can only be used once in a recipe) 
+# which is why we are feeding $HOMEBINSDIR to a just var (so that it can be used
+# throughout the recipe
 VCSH_URL := 'https://github.com/RichiH/vcsh/releases/latest/download/vcsh-standalone.sh'
+BIN := env_var('HOMEBINSDIR')
 vcsh: vcshprep
   # Install vcsh
-  @mkdir -p $HOMEBINSDIR
-  @curl -fsLS {{VCSH_URL}} -o  $HOMEBINSDIR/vcsh
-  @chmod u+x ~/.local/bin/vcsh
+  @mkdir -p {{BIN}}
+  @curl -fsLS {{VCSH_URL}} -o {{BIN}}/vcsh
+  @chmod u+x {{BIN}}/vcsh
 
 dotfiles: vcsh
   # deploy config files for various tools
