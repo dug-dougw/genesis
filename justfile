@@ -2,7 +2,7 @@
 set dotenv-load
 
 
-install: git vcsh direnv rust_packages
+install: git dotfiles plugins direnv rust_packages
 
 
 ########################################################################### 
