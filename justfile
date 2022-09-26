@@ -45,9 +45,17 @@ vcsh: vcshprep
   @curl -fsLS {{VCSH_URL}} -o {{BIN}}/vcsh
   @chmod u+x {{BIN}}/vcsh
 
+# needs to do a fetch if repo already exists
+# need to add ssh key to agent
 dotfiles: vcsh
   # deploy config files for various tools
-  for i in $DOTFILES; do vcsh clone -b $i $CONFIGSREPO $i; done
+  for i in $DOTFILES; do\
+    if [ "$(ls -A {{VCSHDIR}}/repo.d/$i.git)" ]; then \
+      cd {{VCSHDIR}}/repo.d/; git fetch; \
+    else \
+      vcsh clone -b $i $CONFIGSREPO $i; \
+    fi; \
+  done
 
 pluginmanagers:
   # Install plugin managers for tmux and vim
