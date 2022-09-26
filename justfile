@@ -49,7 +49,7 @@ vcsh: vcshprep
 # need to add ssh key to agent
 dotfiles: vcsh
   # deploy config files for various tools
-  for i in $DOTFILES; do\
+  for i in $DOTFILES; do \
     if [ "$(ls -A {{VCSHDIR}}/repo.d/$i.git)" ]; then \
       cd {{VCSHDIR}}/repo.d/; git fetch; \
     else \
