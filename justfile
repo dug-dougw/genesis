@@ -28,10 +28,10 @@ vcshprep:
   @mkdir -p {{VCSHDIR}}/hooks-enabled
   # fetch the git hook script which vcsh will use
   @module load git/2.37.3; \
-  if [ -d {{VCSHDIR}}/hooks-enabled ]; then \
-    cd {{VCSHDIR}}/hooks-enabled; git fetch; \
-  else \
+  if find {{VCSHDIR}}/hooks-enabled -maxdepth 0 -empty | read v; then \
     git clone -b vcsh --single-branch $CONFIGSREPO {{VCSHDIR}}/hooks-enabled; \
+  else \
+    cd {{VCSHDIR}}/hooks-enabled; git fetch; \
   fi
 
 # Note that ENV vars don't propagate (can only be used once in a recipe) 
