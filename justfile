@@ -28,7 +28,7 @@ vcshprep:
   @mkdir -p {{VCSHDIR}}/hooks-enabled
   # fetch the git hook script which vcsh will use
   @module load git/2.37.3; \
-  if [ "$(ls -A {{VCSHDIR}}/hooks-enabled)" ]; then \
+  if [ -d {{VCSHDIR}}/hooks-enabled ]; then \
     cd {{VCSHDIR}}/hooks-enabled; git fetch; \
   else \
     git clone -b vcsh --single-branch $CONFIGSREPO {{VCSHDIR}}/hooks-enabled; \
@@ -50,7 +50,7 @@ vcsh: vcshprep
 dotfiles: vcsh
   # deploy config files for various tools
   for i in $DOTFILES; do \
-    if [ "$(ls -A {{VCSHDIR}}/repo.d/$i.git)" ]; then \
+    if [ -d {{VCSHDIR}}/repo.d/$i.git ]; then \
       cd {{VCSHDIR}}/repo.d/; git fetch; \
     else \
       vcsh clone -b $i $CONFIGSREPO $i; \
