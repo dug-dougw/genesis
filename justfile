@@ -5,7 +5,7 @@ set dotenv-load
 install: git dotfiles plugins direnv rust_packages
 
 sshtest:
-  @if ! ssh -T igit@github.com 2>&1|grep -q 'successfully authenticated'; then \
+  @if ! ssh -T git@github.com 2>&1|grep -q 'successfully authenticated'; then \
     echo "key for github not valid"; exit 1;\
   fi
   
