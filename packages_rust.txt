@@ -3,3 +3,4 @@ ripgrep			# faster grep
 bat			# cat with pretty colours!
 lsd			# ls replacement, in two minds about this one
 pyflow			# python package thing, think pyenv venv conda type of thing
+sd                      # easier sed
