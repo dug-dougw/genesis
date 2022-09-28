@@ -2,20 +2,21 @@
 set dotenv-load
 
 
-install: git dotfiles plugins direnv rust_packages
+install: sshtest git dotfiles plugins direnv rust_packages
 
 sshtest:
   @if ! ssh -T git@github.com 2>&1|grep -q 'successfully authenticated'; then \
     echo "key for github not valid"; exit 1;\
   fi
   
-  # add ssh key to sshagent
-  if [ ! -S ~/.ssh/ssh_auth_sock ]; then \
-    eval `ssh-agent` \
-    ln -sf "$SSH_AUTH_SOCK" ~/.ssh/ssh_auth_sock \
-  fi 
-  export SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock; \
-  ssh-add -l > /dev/null || ssh-add
+  # NOT WORKING
+  ## add ssh key to sshagent
+  #if [ ! -S ~/.ssh/ssh_auth_sock ]; then \
+  #  eval `ssh-agent` \
+  #  ln -sf "$SSH_AUTH_SOCK" ~/.ssh/ssh_auth_sock \
+  #fi 
+  #export SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock; \
+  #ssh-add -l > /dev/null || ssh-add
 
 
 ########################################################################### 
