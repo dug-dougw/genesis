@@ -77,7 +77,7 @@ pluginmanagers:
     git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim; \
   fi
   if [ ! -d ~/.tmux/plugins/tpm ]; then \
-    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm; \
   fi
 
 plugins: pluginmanagers
