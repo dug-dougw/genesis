@@ -65,7 +65,7 @@ dotfiles: vcsh
   # deploy config files for various tools
   for i in $DOTFILES; do \
     if [ -d {{VCSHDIR}}/repo.d/$i.git ]; then \
-      cd {{VCSHDIR}}/repo.d/$i; git fetch; \
+      cd {{VCSHDIR}}/repo.d/$i.git; git fetch; \
     else \
       vcsh clone -b $i $CONFIGSREPO $i; \
     fi; \
