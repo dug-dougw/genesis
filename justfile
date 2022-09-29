@@ -74,7 +74,7 @@ dotfiles: vcsh
 pluginmanagers:
   # Install plugin managers for tmux and vim
   if [ ! -d ~/.vim/bundle/Vundle.vim ]; then \
-    git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim \
+    git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim; \
   fi
   if [ ! -d ~/.tmux/plugins/tpm ]; then \
     git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
