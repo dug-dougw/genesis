@@ -83,7 +83,7 @@ plugins: pluginmanagers
   @module load vim; \
   vim +PluginInstall +qall
   # Install tmux plugins
-  @module load tmux; \
+  @module load tmux; tmux source ~/.tmux.conf; \
   ~/.tmux/plugins/tpm/bin/install_plugins
 
 ########################################################################### 
