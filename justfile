@@ -59,11 +59,9 @@ vcsh: vcshprep
   @curl -fsLS {{VCSH_URL}} -o {{BIN}}/vcsh
   @chmod u+x {{BIN}}/vcsh
 
-# needs to do a fetch if repo already exists
-# need to add ssh key to agent
 dotfiles: vcsh
   # deploy config files for various tools
-  for i in $DOTFILES; do \
+  @for i in $DOTFILES; do \
     if [ -d {{VCSHDIR}}/repo.d/$i.git ]; then \
       cd {{VCSHDIR}}/repo.d/$i.git; git fetch; \
     else \
@@ -73,18 +71,20 @@ dotfiles: vcsh
 
 pluginmanagers:
   # Install plugin managers for tmux and vim
-  if [ ! -d ~/.vim/bundle/Vundle.vim ]; then \
+  @if [ ! -d ~/.vim/bundle/Vundle.vim ]; then \
     git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim; \
   fi
-  if [ ! -d ~/.tmux/plugins/tpm ]; then \
+  @if [ ! -d ~/.tmux/plugins/tpm ]; then \
     git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm; \
   fi
 
 plugins: pluginmanagers
   # Install vim plugins
+  @module load vim; \
   vim +PluginInstall +qall
   # Install tmux plugins
-  ~/.tmux/plugins/tpm//bin/install_plugins
+  @module load tmux; \
+  ~/.tmux/plugins/tpm/bin/install_plugins
 
 ########################################################################### 
 
