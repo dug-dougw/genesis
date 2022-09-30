@@ -2,7 +2,7 @@
 set dotenv-load
 
 
-install: sshtest git dotfiles plugins direnv rust_packages
+install: sshtest git dotfiles plugins rust_packages
 
 sshtest:
   @if ! ssh -T git@github.com 2>&1|grep -q 'successfully authenticated'; then \
@@ -90,12 +90,12 @@ plugins: pluginmanagers
   
 ########################################################################### 
 
-direnv: 
-  #Install direnv
-  #!/usr/bin/env bash
-  set -euxo pipefail
-  bin_path=$HOMEBINSDIR bash <(/usr/bin/curl -sfL https://direnv.net/install.sh)
-  chmod +x $HOMEBINSDIR/direnv
+#direnv: 
+#  #Install direnv
+#  #!/usr/bin/env bash
+#  set -euxo pipefail
+#  bin_path=$HOMEBINSDIR bash <(/usr/bin/curl -sfL https://direnv.net/install.sh)
+#  chmod +x $HOMEBINSDIR/direnv
 ########################################################################### 
 
 rust:
@@ -106,4 +106,9 @@ PACKAGEFILE := './packages_rust.txt'
 rust_packages: rust
   # Compile and install some rust binaries/tools
   @for bin in `cat {{PACKAGEFILE}}|awk -F# '{print $1}'`; do cargo install $bin; done
+
+python:
+  module load python/3.9.7; \
+  curl -sSL https://raw.githubusercontent.com/pdm-project/pdm/main/install-pdm.py | python -
+
 
