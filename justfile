@@ -79,14 +79,15 @@ pluginmanagers:
   fi
 
 plugins: pluginmanagers
+  #!/usr/bin/env bash
   # Install vim plugins
-  @module load vim; \
+  module load vim
   vim +PluginInstall +qall
   # Install tmux plugins
-  @module load tmux; tmux new -d
-  tmux source ~/.tmux.conf; \
+  module load tmux; tmux new -d
+  tmux source ~/.tmux.conf
   ~/.tmux/plugins/tpm/bin/install_plugins
-
+  
 ########################################################################### 
 
 direnv: 
